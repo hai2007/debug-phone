@@ -1,0 +1,127 @@
+<template>
+    <div class='view' style='display: none;' id='page-network-dialog'>
+        <div class="container">
+            <ul>
+                <li>
+                    <span>方法:</span>{{code.method}}
+                </li>
+                <li>
+                    <span>地址:</span>{{code.url}}
+                </li>
+                <li>
+                    <span>阶段:</span>{{type}}
+                </li>
+                <li>
+                    <span> 状态:</span>{{responseMessage.status}}{{httpstatu}}
+                </li>
+            </ul>
+            <h2>请求参数</h2>
+            <div class='showview object' ui-show-object="params"></div>
+            <h2>响应头</h2>
+            <div class='showview' ui-response-headers='code.responseHeaders'></div>
+            <h2>响应内容</h2>
+            <div class='showview'>
+                {{responseMessage.responseText}}
+            </div>
+            <h2>响应预览</h2>
+            <div class='showview object' ui-show:json='responseType__' ui-show-object="responseMessage_json"></div>
+            <div class='showview' ui-show:normal='responseType__'>无</div>
+            <div class='btn' @click='close'>关闭</div>
+        </div>
+    </div>
+</template>
+<script>
+    import httpstatus from '../services/HTTP@status.js';
+    export default {
+        data() {
+            return {
+                code: {},
+                responseMessage: {},
+                type: "（未知）",
+                params: "",
+                httpstatu: "",
+                responseType__: 'normal',
+                responseMessage_json: {}
+            };
+        },
+        methods: {
+            close() {
+                this.$document.getElementById('page-network-dialog').style.display = 'none';
+            }
+        },
+        mounted() {
+            window.updatePageNetworkDialogContainer = code => {
+                this.code = code;
+                if ("responseMessage" in code) {
+                    this.responseMessage = code.responseMessage;
+                    this.httpstatu = "(" + (httpstatus[this.responseMessage.status] || "未知") + ")";
+
+                    try {
+                        let temp = JSON.parse(this.responseMessage.responseText);
+                        this.responseMessage_json = temp;
+                        this.responseType__ = 'json';
+                    } catch (e) {
+                        // todo
+                    }
+
+                }
+                this.params = code.params || "无";
+                this.type = {
+                    "network-ok": "正常接收",
+                    "timeout": "超时失败",
+                    "error": "未知错误",
+                    "send-error": "请求失败"
+                }[code.type] || "未知";
+            };
+        }
+    };
+</script>
+<style>
+    div.view {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        padding: 30px;
+        background-color: rgba(38, 39, 40, 0.37);
+    }
+
+    div.view>.container {
+        position: fixed;
+        top: 120px;
+        left: 0px;
+        width: 100vw;
+        height: calc(100vh - 120px);
+        background-color: #ffffff;
+        padding: 10px;
+        overflow: auto;
+    }
+
+    div.view>.container>ul>li {
+        margin-bottom: 20px;
+    }
+
+    div.view>.container>ul>li>span {
+        font-weight: 800;
+        color: rgb(0, 0, 0);
+        font-size: 14px;
+    }
+
+    div.view>.container h2 {
+        color: red;
+        font-size: 16px;
+    }
+
+    div.view>.container .showview {
+        padding: 10px;
+    }
+
+    div.view>.container .btn {
+        text-align: center;
+        padding: 10px;
+        background: #cdcaca;
+        margin: 20px 10px;
+        color: white;
+    }
+</style>

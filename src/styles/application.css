@@ -1,0 +1,8 @@
+#page-application-view td {
+    padding: 3px;
+}
+
+#page-application-view input[type='button']{
+    background: #8f8f98;
+    color: white;
+}

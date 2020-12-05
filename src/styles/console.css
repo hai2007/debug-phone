@@ -1,0 +1,36 @@
+/**
+控制打印的日志是否显示
+这样筛选以后方便查看
+*/
+
+div#page-console-view>ul>li {
+    display: none;
+}
+
+div#page-console-view.log>ul>li.log,
+div#page-console-view.info>ul>li.info,
+div#page-console-view.debug>ul>li.debug,
+div#page-console-view.warn>ul>li.warn,
+div#page-console-view.error>ul>li.error,
+div#page-console-view.trace>ul>li.trace {
+    display: block;
+}
+
+.showobject ol {
+    padding-left: 10px;
+}
+
+.showobject [isopen='no']>ol {
+    display: none;
+}
+
+.showobject span {
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-image: url('../assets/right.png');
+    padding-left: 20px;
+}
+
+.showobject [isopen='yes']>span {
+    background-image: url('../assets/down.png');
+}

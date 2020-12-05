@@ -1,6 +1,6 @@
 {
   "name": "debug-phone",
-  "version": "0.0.0-alpha",
+  "version": "0.1.0",
   "description": "🔧 Debug module for browsers which can Display on page or in Console, for Phone debugging.",
   "main": "dist/debug-phone.min.js",
   "scripts": {
@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "@hai2007/style": "^0.1.2",
-    "icrush": "^2.1.0"
+    "@hai2007/tool": "^0.3.1",
+    "icrush": "^2.1.0",
+    "xhtml.js": "^1.1.2"
   }
 }

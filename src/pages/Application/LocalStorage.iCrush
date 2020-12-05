@@ -1,0 +1,58 @@
+<template>
+  <div class='view' id='page-application-localstorage-view'>
+    <input type="button" value="清空" @click='clear()'>
+    <input type="button" value="同步" @click='updateData()'>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id='page-application-localstorage-view_tbody'></tbody>
+    </table>
+  </div>
+</template>
+<script>
+  export default {
+    mounted() {
+      this.updateData();
+
+      // 监听数据改变
+      this.on('localStorage', () => {
+        this.updateData();
+      });
+    },
+    methods: {
+      clear() {
+        window.localStorage.clear();
+      },
+      updateData() {
+        let storage = window.localStorage, template = ``;
+        for (let i = 0; i < storage.length; i++) {
+          let key = storage.key(i);
+          template += `<tr style='border-bottom: 1px solid white;'>
+              <td style='border-right: 1px solid white;'>${key}</td>
+              <td>${storage.getItem(key)}</td>
+            </tr>`;
+        }
+        this.$document.getElementById('page-application-localstorage-view_tbody').innerHTML = template;
+      }
+    }
+  };
+</script>
+<style>
+  div.view>[type='button'] {
+    margin-left: 5px;
+  }
+
+  div.view>table {
+    width: 100vw;
+    margin-top: 5px;
+  }
+
+  div.view>table>thead {
+    background-color: #b50404;
+    color: white;
+  }
+</style>

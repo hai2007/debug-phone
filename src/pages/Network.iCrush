@@ -1,5 +1,208 @@
 <template>
-    <div>
-        network
+    <div class='view xhr' id='page-network-view'>
+        <div>
+            <div class='clean' @click='doClean()'>清空</div>
+            <div class="xhr" ui-togger-class:xhr='page-network-view'>XHR</div>
+        </div>
+        <p>
+            <span>名称</span>
+            <span>状态</span>
+            <span>类型</span>
+            <span>操作</span>
+        </p>
+        <ul id='pages-network-ul'></ul>
+        <network-dialog></network-dialog>
     </div>
 </template>
+<script>
+    import '../styles/network.css';
+    import xhrml from 'xhtml.js';
+
+    import networkDialog from '../dialogs/network.iCrush';
+
+    export default {
+        data() {
+            return {
+                networkMsg: {},
+                flag: true
+            };
+        },
+        component: {
+            networkDialog
+        },
+        methods: {
+            doClean() {
+                this.$document.getElementById('pages-network-ul').innerHTML = '';
+                this.networkMsg = {};
+            },
+            appendLi(ul, name, type, id) {
+
+                this.flag = !this.flag;
+
+                let li = this.$document.createElement('li');
+
+                li.innerHTML = `
+                    <span title='${name}' style='white-space: nowrap;vertical-align: bottom;overflow: hidden;text-overflow: ellipsis;display: inline-block;width: calc(100% - 150px);font-size: 14px;padding: 5px;'>
+                        ${name.replace(/\?.*$/, '').replace(/^.*\/\//, '')}
+                    </span><span style='display: inline-block;width: 50px;font-size: 14px;padding: 5px;'>
+                        等待
+                    </span><span style='display: inline-block;width: 50px;font-size: 14px;padding: 5px;'>
+                        ${type}
+                    </span><span style='cursor: pointer;display: inline-block;width: 50px;font-size: 14px;padding: 5px;'>
+                        <span style='background: #f4f4f4;color: red;padding:0 3px;'>查看</span>
+                    </span>`;
+                li.setAttribute('class', type);
+                li.setAttribute('id', id);
+                ul.appendChild(li);
+
+                xhrml(li.children[3]).bind('click', () => {
+                    window.updatePageNetworkDialogContainer(this.networkMsg[id]);
+                    this.$document.getElementById('page-network-dialog').style.display = 'block';
+                });
+            }
+        },
+        mounted() {
+
+            let ul = this.$document.getElementById('pages-network-ul');
+            this.on('network@xhr', data => {
+
+                if (data.method == 'open') {
+                    this.networkMsg[data.id] = data.content;
+
+                    // 然后追加到页面
+                    this.appendLi(ul, data.content.url, 'XHR', data.id);
+
+                } else if (data.method == 'send') {
+                    this.networkMsg[data.id].params = data.params;
+                } else if (data.method == "end") {
+
+                    // 记录信息
+                    this.networkMsg[data.id].type = data.type;
+                    this.networkMsg[data.id].responseMessage = data.responseMessage;
+
+                    // 修改列表的状态
+                    let liDom = this.$document.getElementById(data.id);
+                    let statusDom = liDom.children[1];
+                    statusDom.style.fontWeight = '800';
+
+                    // 先修改颜色
+                    if (data.type == 'send-error' || data.type == 'error') {
+                        statusDom.innerText = "错误";
+                        liDom.style.color = 'red';
+                    } else if (data.type == 'timeout') {
+                        statusDom.innerText = "超时";
+                        statusDom.style.color = 'yellow';
+                    } else if (data.type == 'network-ok') {
+                        if (/^2/.test(data.responseMessage.status)) {
+                            statusDom.innerText = "完成";
+                            statusDom.style.color = 'green';
+                        } else if (/^5/.test(data.responseMessage.status)) {
+                            statusDom.innerText = "出错";
+                            liDom.style.color = 'red';
+                        } else if (/^4/.test(data.responseMessage.status)) {
+                            statusDom.innerText = "404";
+                            liDom.style.color = 'red';
+                        } else {
+                            statusDom.innerText = "未知";
+                            statusDom.style.color = 'gray';
+                        }
+                    }
+
+                }
+
+                this.networkMsg[data.id].responseHeaders = data.responseHeaders;
+
+            });
+        }
+    };
+</script>
+<style>
+    /*
+        活跃的样式
+    */
+
+    div.view.xhr>div>div.xhr {
+        background-color: green;
+    }
+
+    div.view.ws>div>div.ws {
+        background-color: blue;
+    }
+
+    div.view.xhr>div>div.xhr,
+    div.view.ws>div>div.ws {
+        color: white;
+    }
+
+    /*
+        不活跃的样式
+    */
+
+    div.view>div>div.xhr {
+        background-color: #99cb99;
+    }
+
+    div.view>div>div.ws {
+        background-color: #c0c0e6;
+    }
+
+
+    div.view {
+        padding-top: 70px;
+    }
+
+    div.view>div {
+        position: fixed;
+        top: 36px;
+        width: 100vw;
+        left: 0;
+        background-color: #d7d4d4;
+        padding-top: 10px;
+    }
+
+    div.view>div>div {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 0 10px;
+        height: 19px;
+        line-height: 19px;
+        text-align: center;
+        cursor: pointer;
+        color: gray;
+    }
+
+    div.view>div>div:not(.clean) {
+        font-size: 12px;
+    }
+
+    div.view>div>div.clean {
+        background-image: url('../assets/clean.png');
+        font-size: 0;
+        vertical-align: top;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 30px;
+    }
+
+    /**
+        标题样式
+    */
+    div.view>p {
+        color: white;
+        background-color: #ef0303;
+        position: fixed;
+        width: 100vw;
+        top: 75px;
+    }
+
+    div.view>p>span {
+        display: inline-block;
+        width: 50px;
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    div.view>p>span:first-child {
+        width: calc(100% - 150px);
+    }
+</style>

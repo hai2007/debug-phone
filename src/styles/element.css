@@ -1,0 +1,36 @@
+#page-elements-view li {
+    padding-left: 1em;
+    font-size: 12px;
+}
+
+#page-elements-view i {
+    font-style: normal;
+}
+
+#page-elements-view [isopen='no']>ul {
+    display: none;
+}
+
+#page-elements-view li {
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-image: url('../assets/right.png');
+}
+
+#page-elements-view li[isopen='yes'] {
+    background-image: url('../assets/down.png');
+}
+
+#page-elements-view li[isselect='yes'] {
+    border-left: 3px dashed #8e8387;
+}
+
+#page-elements-view .refresh {
+    position: fixed;
+    right: 0;
+    top: 100px;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}

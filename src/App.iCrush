@@ -32,6 +32,10 @@
     import Network from './pages/Network.iCrush';
     import Application from './pages/Application.iCrush';
 
+    import startUpConsole from './services/Console.js';
+    import startUpNetworkXHR from './services/Network@XHR.js';
+    import startStorage from './services/storage.js';
+
     export default {
         data() {
             return {
@@ -63,6 +67,11 @@
             "uiConsole": Console,
             "uiNetwork": Network,
             "uiApplication": Application
+        },
+        created() {
+            startUpConsole(this);
+            startUpNetworkXHR(this);
+            startStorage(this);
         }
     };
 
@@ -102,7 +111,7 @@
         top: 0;
         right: 0;
         z-index: 9999;
-        background-color: #ff1e8a;
+        background-color: #00aece;
         margin: 0px;
         width: 35px;
         height: 35px;

@@ -1,0 +1,33 @@
+div#page-network-view>ul>li {
+    display: none;
+}
+
+div#page-network-view.xhr>ul>li.XHR,
+div#page-network-view.ws>ul>li.WS {
+    display: block;
+}
+
+.uiResponseHeaders td {
+    border: 1px solid rgb(218, 215, 215);
+    padding: 4px;
+}
+
+#page-network-dialog .showview.object ol {
+    padding-left: 10px;
+}
+
+#page-network-dialog .showview.object [isopen='no']>ol {
+    display: none;
+}
+
+#page-network-dialog .showview.object span {
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-image: url('../assets/right.png');
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+#page-network-dialog .showview.object [isopen='yes']>span {
+    background-image: url('../assets/down.png');
+}

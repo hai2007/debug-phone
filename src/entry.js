@@ -9,7 +9,10 @@ import './styles/common.css';
 
 // 引入指令
 import './directives/ui-hidden';
+import './directives/ui-togger-class';
 import './directives/ui-show';
+import './directives/ui-response-headers';
+import './directives/ui-show-object';
 
 // 引入全局通知机制
 import event from './plug/@event.js'; iCrush.use(event);

@@ -1,5 +1,166 @@
 <template>
-    <div>
-        console
+    <div class='view log info debug warn error trace' id='page-console-view'>
+        <div>
+            <div class='clean' @click='doClean()'>清空</div>
+            <div class="log" ui-togger-class:log='page-console-view'>log</div>
+            <div class="info" ui-togger-class:info='page-console-view'>info</div>
+            <div class="debug" ui-togger-class:debug='page-console-view'>debug</div>
+            <div class="warn" ui-togger-class:warn='page-console-view'>warn</div>
+            <div class="error" ui-togger-class:error='page-console-view'>error</div>
+            <div class="trace" ui-togger-class:trace='page-console-view'>trace</div>
+        </div>
+        <ul id='pages-console-ul'></ul>
     </div>
 </template>
+<script>
+    import showData from '../services/showData.js';
+    import '../styles/console.css';
+
+    export default {
+        methods: {
+            doClean() {
+                this.$document.getElementById('pages-console-ul').innerHTML = '';
+            },
+            setClass(classString) {
+                this.$document.getElementById('page-console-view').setAttribute('class', classString);
+            }
+        },
+        mounted() {
+
+            // 监听打印日志，然后追加到内容中去
+            let ul = this.$document.getElementById('pages-console-ul');
+            this.on('console', data => {
+                let date = new Date();
+                let color = {
+                    log: "gray",
+                    info: 'green',
+                    debug: 'blue',
+                    warn: 'f1c010',
+                    error: 'red',
+                    trace: 'white'
+                }[data.type];
+                let li = this.$document.createElement('li');
+                li.style.color = color;
+                li.setAttribute('class', data.type)
+                li.innerHTML = `
+                    <i style='font-size:12px;color:black;font-style:normal;padding-right:10px;width:70px;display:inline-block;'>
+                        ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}
+                    </i>
+                    <i style='font-size:12px;color:black;font-style:normal;padding:5px;display:inline-block;width:50px;text-align:center;background-color:${color};margin-right:10px;'>
+                        ${data.type}
+                    </i>
+                    <ol style='padding:10px 0;font-size:14px;line-height:2em;'></ol>`;
+                ul.appendChild(li);
+
+                // 辅助显示，对于对象，可以折叠
+                showData(this, li.getElementsByTagName('ol')[0], data.content);
+
+            });
+        }
+    };
+</script>
+<style>
+    /*
+        活跃的样式
+    */
+    div.view.log>div>div.log {
+        background-color: gray;
+    }
+
+    div.view.info>div>div.info {
+        background-color: green;
+    }
+
+    div.view.debug>div>div.debug {
+        background-color: blue;
+    }
+
+    div.view.warn>div>div.warn {
+        background-color: #f1c010;
+    }
+
+    div.view.error>div>div.error {
+        background-color: red;
+    }
+
+    div.view.trace>div>div.trace {
+        background-color: white;
+    }
+
+    div.view.log>div>div.log,
+    div.view.info>div>div.info,
+    div.view.debug>div>div.debug,
+    div.view.warn>div>div.warn,
+    div.view.error>div>div.error,
+    div.view.trace>div>div.trace {
+        color: black;
+    }
+
+    /*
+        不活跃的样式
+    */
+    div.view>div>div.log {
+        background-color: #c7c6c6;
+    }
+
+    div.view>div>div.info {
+        background-color: #99cb99;
+    }
+
+    div.view>div>div.debug {
+        background-color: #c0c0e6;
+    }
+
+    div.view>div>div.warn {
+        background-color: #f3e5b2;
+    }
+
+    div.view>div>div.error {
+        background-color: rgb(243, 182, 182);
+    }
+
+    div.view>div>div.trace {
+        background-color: rgb(230, 227, 227);
+    }
+
+    div.view {
+        padding-top: 40px;
+    }
+
+    div.view>ul {
+        padding: 0 10px;
+    }
+
+    div.view>div {
+        position: fixed;
+        top: 36px;
+        width: 100vw;
+        left: 0;
+        background-color: #e0d7d7;
+        padding-top: 10px;
+    }
+
+    div.view>div>div {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 0 10px;
+        height: 19px;
+        line-height: 19px;
+        text-align: center;
+        cursor: pointer;
+        color: gray;
+    }
+
+    div.view>div>div:not(.clean) {
+        font-size: 12px;
+    }
+
+    div.view>div>div.clean {
+        background-image: url('../assets/clean.png');
+        font-size: 0;
+        vertical-align: top;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 30px;
+    }
+</style>
