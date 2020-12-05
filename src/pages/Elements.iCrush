@@ -31,14 +31,18 @@
                 element.setAttribute('isOpen', 'no');
                 this.doit(document.getElementsByTagName('html'), element);
 
-                // 初始化打开
-                this.$document.getElementsByName('tag-begin')[0].click();
-                setTimeout(() => {
-                    let tags = this.$document.getElementsByName('tag-begin');
-                    for (let i = 1; i < tags.length; i++) {
-                        tags[i].click();
-                    }
-                }, 100);
+                try {
+                    // 初始化打开
+                    this.$document.getElementsByName('tag-begin')[0].click();
+                    setTimeout(() => {
+                        let tags = this.$document.getElementsByName('tag-begin');
+                        for (let i = 1; i < tags.length; i++) {
+                            tags[i].click();
+                        }
+                    }, 100);
+                } catch (e) {
+                    console.error(e);
+                }
 
             },
             getTemplate(el) {

@@ -1,6 +1,6 @@
 <template>
-    <div class='view' style='display: none;' id='page-network-dialog'>
-        <div class="container">
+    <div class='view' style='display: none;' id='page-network-dialog' @click='close'>
+        <div class="container" @click.stop='nouse'>
             <ul>
                 <li>
                     <span>方法:</span>{{code.method}}
@@ -47,7 +47,8 @@
         methods: {
             close() {
                 this.$document.getElementById('page-network-dialog').style.display = 'none';
-            }
+            },
+            nouse() { }
         },
         mounted() {
             window.updatePageNetworkDialogContainer = code => {

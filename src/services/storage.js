@@ -1,20 +1,20 @@
 
 // 拦截本地存储服务
 
-let sessionStorage = window.sessionStorage;
-let localStorage = window.localStorage;
-
-// 会修改数据的方法
-
-const session_setItem = sessionStorage.setItem;
-const session_clear = sessionStorage.clear;
-const session_removeItem = sessionStorage.removeItem;
-
-const local_setItem = localStorage.setItem;
-const local_clear = localStorage.clear;
-const local_removeItem = localStorage.removeItem;
-
 export default function (target) {
+
+    let sessionStorage = window.sessionStorage;
+    let localStorage = window.localStorage;
+
+    // 会修改数据的方法
+
+    const session_setItem = sessionStorage.setItem;
+    const session_clear = sessionStorage.clear;
+    const session_removeItem = sessionStorage.removeItem;
+
+    const local_setItem = localStorage.setItem;
+    const local_clear = localStorage.clear;
+    const local_removeItem = localStorage.removeItem;
 
     sessionStorage.setItem = function () {
         session_setItem.apply(this, arguments);

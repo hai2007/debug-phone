@@ -36,6 +36,8 @@
     import startUpNetworkXHR from './services/Network@XHR.js';
     import startStorage from './services/storage.js';
 
+    import xhtml from 'xhtml.js';
+
     export default {
         data() {
             return {
@@ -49,8 +51,16 @@
             },
             togger() {
                 let iframe = document.getElementById('@hai2007/debug-phone/iframe');
+                let leftAddRight;
+                if (/Mobile/.test(navigator.userAgent)) {
+                    leftAddRight = 0;
+                } else {
+                    let bodyLeft = +xhtml(document.body).css('margin-left').replace('px', '');
+                    let bodyRight = +xhtml(document.body).css('margin-right').replace('px', '');
+                    leftAddRight = bodyRight + bodyLeft;
+                }
                 if (this.isHidden) {
-                    iframe.style.width = '100vw';
+                    iframe.style.width = 'calc(100vw - ' + leftAddRight + 'px)';
                     iframe.style.height = "100vh";
                     iframe.style.backgroundColor = '#e0d7d7';
                 } else {
@@ -71,7 +81,12 @@
         created() {
             startUpConsole(this);
             startUpNetworkXHR(this);
-            startStorage(this);
+
+            try {
+                startStorage(this);
+            } catch (e) {
+                console.error(e);
+            }
         }
     };
 

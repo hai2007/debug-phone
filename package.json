@@ -1,6 +1,6 @@
 {
   "name": "debug-phone",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "🔧 Debug module for browsers which can Display on page or in Console, for Phone debugging.",
   "main": "dist/debug-phone.min.js",
   "scripts": {
@@ -44,11 +44,8 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
+    "webpack-merge": "^4.2.2",
     "@hai2007/style": "^0.1.2",
-    "@hai2007/tool": "^0.3.1",
     "icrush": "^2.1.0",
     "xhtml.js": "^1.1.2"
   }
