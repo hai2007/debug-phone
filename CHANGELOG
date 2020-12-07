@@ -18,3 +18,7 @@ v0.2.0:
     date:2020-12-06
     changes:
       - 恢复基于@hai2007/tool的类型判断
+v0.2.1:
+    date:2020-12-07
+    changes:
+      - 修复一些bug

@@ -17,7 +17,11 @@ let doit = (target, obj) => {
             let template = "<ol>";
 
             for (let key in obj) {
-                template += `<li><span><i style='font-style:normal;color:#905'>${key}</i>:${obj[key]}</span></li>`;
+                try {
+                    template += `<li><span><i style='font-style:normal;color:#905'>${key}</i>:${obj[key]}</span></li>`;
+                } catch (e) {
+                    // todo
+                }
             }
             template += "</ol>";
             xhtml(target).append(template);

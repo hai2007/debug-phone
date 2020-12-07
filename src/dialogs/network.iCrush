@@ -62,7 +62,8 @@
                         this.responseMessage_json = temp;
                         this.responseType__ = 'json';
                     } catch (e) {
-                        // todo
+                        this.responseMessage_json = {};
+                        this.responseType__ = 'normal';
                     }
 
                 }
