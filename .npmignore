@@ -4,3 +4,7 @@
 node_modules
 .vscode
 .editorconfig
+test
+.github
+src
+icrush-style-loader
