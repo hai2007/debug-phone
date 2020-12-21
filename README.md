@@ -4,7 +4,7 @@
 # Debug Phone - 🔧 一个可用于调试手机的调试工具
 
 <p>
-  <a href="https://yelloxing.gitee.io/npm-downloads?interval=7&packages=debug-phone"><img src="https://img.shields.io/npm/dm/debug-phone.svg" alt="downloads"></a>
+  <a href="https://hai2007.gitee.io/npm-downloads?interval=7&packages=debug-phone"><img src="https://img.shields.io/npm/dm/debug-phone.svg" alt="downloads"></a>
   <a href="https://packagephobia.now.sh/result?p=debug-phone"><img src="https://packagephobia.now.sh/badge?p=debug-phone" alt="install size"></a>
   <a href="https://www.jsdelivr.com/package/npm/debug-phone"><img src="https://data.jsdelivr.com/v1/package/npm/debug-phone/badge" alt="CDN"></a>
   <a href="https://www.npmjs.com/package/debug-phone"><img src="https://img.shields.io/npm/v/debug-phone.svg" alt="Version"></a>
