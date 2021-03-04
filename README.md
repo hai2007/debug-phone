@@ -9,6 +9,9 @@
   <a href="https://www.jsdelivr.com/package/npm/debug-phone"><img src="https://data.jsdelivr.com/v1/package/npm/debug-phone/badge" alt="CDN"></a>
   <a href="https://www.npmjs.com/package/debug-phone"><img src="https://img.shields.io/npm/v/debug-phone.svg" alt="Version"></a>
   <a href="https://github.com/hai2007/Debug-Phone/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/debug-phone.svg" alt="License"></a>
+  <a href="https://github.com/hai2007/Debug-Phone" target='_blank'>
+        <img alt="GitHub repo stars" src="https://img.shields.io/github/stars/hai2007/Debug-Phone?style=social">
+    </a>
 </p>
 
 - 如果你想查看运行效果，可以[点击此次查看](http://hai2007.gitee.io/debug-phone/test/index.html)。
