@@ -92,7 +92,7 @@
     }
 
     ul.content-view {
-        height: calc(100vh - 36px);
+        height: calc(100vh - 136px);
         overflow: auto;
     }
 
