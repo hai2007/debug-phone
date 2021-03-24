@@ -33,6 +33,8 @@ iframe.style.cssText = `
         line-height: 50px;
         text-align: center;
         border: 0px;
+        border-top:0px solid rgba(0,0,0,0.5);
+        box-sizing: content-box;
     `;
 document.documentElement.appendChild(iframe);
 

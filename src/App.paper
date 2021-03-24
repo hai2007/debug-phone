@@ -57,11 +57,12 @@
                 if (this.isHidden) {
                     iframe.style.width = 'calc(100vw - ' + leftAddRight + 'px)';
                     iframe.style.height = "100vh";
-                    iframe.style.backgroundColor = '#e0d7d7';
+                    iframe.style.borderTopWidth = '100px';
                 } else {
                     iframe.style.width = '50px';
                     iframe.style.height = '50px';
                     iframe.style.backgroundColor = '';
+                    iframe.style.borderTopWidth = '0px';
                 }
                 this.isHidden = !this.isHidden;
             }
@@ -86,6 +87,10 @@
 
 </script>
 <style>
+    .debugger-view {
+        background-color: #e0d7d7;
+    }
+
     ul.content-view {
         height: calc(100vh - 36px);
         overflow: auto;
