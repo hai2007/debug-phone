@@ -58,6 +58,19 @@ npm install --save-dev debug-phone
 import 'debug-phone';
 ```
 
+## 关于Promise中的错误无法捕获问题等相关问题解决方案说明
+
+以```Promise```举例子，我们无法获取其错误内容，不过，你可以在合适的地方添加类似如下的语句来实现：
+
+```js
+new Promise()
+ ......
+    .catch(function (error) {
+        console.error(error.stack);
+    })
+......
+```
+
 开源协议
 ---------------------------------------
 [MIT](https://github.com/hai2007/Debug-Phone/blob/master/LICENSE)

@@ -6,6 +6,11 @@ module.exports = {
         path: __dirname,
         filename: 'dist/debug-phone.min.js'
     },
+    resolve: {
+        alias: {
+            'quick-paper': 'quick-paper/dist/quick-paper.core.min.js'
+        }
+    },
     module: {
         rules: [{
             test: /\.paper$/,

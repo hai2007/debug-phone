@@ -79,6 +79,7 @@
     <ul>
         <li onclick='console.log(window)'>打印对象</li>
         <li onclick="throw new Error('错误内容')">触发JS Error</li>
+        <li onclick='doPromiseError()'>Promise和JS错误</li>
     </ul>
 
     <ul class='xhr'>
@@ -110,6 +111,24 @@
             xhr.send({
                 "key": "value"
             });
+
+        }
+
+        // Promise和JS错误
+        function doPromiseError() {
+
+            new Promise(function (resolve, reject) {
+
+                resolve('同意了');
+
+            })
+            .then(function (data) {
+                throw new Error('一个错误:' + data);
+            })
+            .catch(function (error) {
+                console.error(error.stack);
+            });
+
 
         }
 

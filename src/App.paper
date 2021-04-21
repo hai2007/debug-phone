@@ -4,7 +4,6 @@
             <ul class="nav" :flag='flag'>
                 <li @click='changeFlag("console")' class='console'>Console</li>
                 <li @click='changeFlag("network")' class='network'>Network</li>
-                <li @click='changeFlag("application")' class='application'>Application</li>
             </ul>
             <ul class="content-view">
                 <li ui-show:console='flag '>
@@ -12,9 +11,6 @@
                 </li>
                 <li ui-show:network='flag'>
                     <ui-network></ui-network>
-                </li>
-                <li ui-show:application='flag'>
-                    <ui-application></ui-application>
                 </li>
             </ul>
         </div>
@@ -25,11 +21,9 @@
 
     import Console from './pages/Console.paper';
     import Network from './pages/Network.paper';
-    import Application from './pages/Application.paper';
 
     import startUpConsole from './services/Console.js';
     import startUpNetworkXHR from './services/Network@XHR.js';
-    import startStorage from './services/storage.js';
 
     import xhtml from '@hai2007/tool/xhtml.js';
 
@@ -70,18 +64,11 @@
         },
         component: {
             "uiConsole": Console,
-            "uiNetwork": Network,
-            "uiApplication": Application
+            "uiNetwork": Network
         },
         created() {
             startUpConsole(this);
             startUpNetworkXHR(this);
-
-            try {
-                startStorage(this);
-            } catch (e) {
-                console.error(e);
-            }
         }
     };
 
@@ -106,8 +93,7 @@
     }
 
     ul.nav[flag='console']>li.console,
-    ul.nav[flag='network']>li.network,
-    ul.nav[flag='application']>li.application {
+    ul.nav[flag='network']>li.network{
         color: white;
         border-bottom: 2px solid red;
     }
