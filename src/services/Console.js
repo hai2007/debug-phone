@@ -62,12 +62,22 @@ export default function (target) {
     });
 
     // 监听Promise相关错误
-    window.addEventListener('unhandledrejection', event => {
-        let content = event.reason.stack;
-        target.trigger('console', {
-            type: "error",
-            content: [content]
+    if ('addEventListener' in window) {
+        window.addEventListener('unhandledrejection', event => {
+            let content = event.reason.stack;
+            target.trigger('console', {
+                type: "error",
+                content: [content]
+            });
         });
-    });
+    }
+
+    // 主动通知的方式
+    window.debugPhoneConsole = function (type, ...content) {
+        target.trigger('console', {
+            type: type,
+            content: content
+        });
+    };
 
 };

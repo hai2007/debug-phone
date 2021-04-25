@@ -122,11 +122,22 @@
                 resolve('同意了');
 
             })
-            .then(function (data) {
-                throw new Error('一个错误:' + data);
-            });
+                .then(function (data) {
+                    throw new Error('一个错误:' + data);
+                });
 
 
+        }
+
+        if ('debugPhoneConsole' in window) {
+
+            // 主动通知
+            window.debugPhoneConsole('log', '主动通知log','1','2');
+            window.debugPhoneConsole('info', '主动通知info');
+            window.debugPhoneConsole('debug', '主动通知debug');
+            window.debugPhoneConsole('warn', '主动通知warn');
+            window.debugPhoneConsole('error', '主动通知error');
+            window.debugPhoneConsole('trace', '主动通知trace');
         }
 
     </script>

@@ -58,18 +58,24 @@ npm install --save-dev debug-phone
 import 'debug-phone';
 ```
 
-## 关于Promise中的错误无法捕获问题等相关问题解决方案说明
+## 如何主动告诉插件打印内容
 
-以```Promise```举例子，我们无法获取其错误内容，不过，你可以在合适的地方添加类似如下的语句来实现：
+在有些情况下，比如混合开发，原生的错误我们无法捕获，不过，你可以在合适的地方添加类似如下的语句来实现：
 
 ```js
-new Promise()
- ......
-    .catch(function (error) {
-        console.error(error.stack);
-    })
-......
+if('debugPhoneConsole' in window){
+
+    // type表示打印级别：log、info、debug、warn、error、trace
+    window.debugPhoneConsole(type, content1, content2, ...);
+}
 ```
+
+比如，我们现在有一个错误语句：
+
+```js
+window.debugPhoneConsole('error', '原生发生了请求错误');
+```
+
 
 开源协议
 ---------------------------------------
